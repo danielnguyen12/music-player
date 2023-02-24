@@ -12,7 +12,7 @@ const cover = document.getElementById('cover');
 const songTitles = ['hey', 'summer', 'ukulele'];
 
 // Song tracker
-let songIndex = 2;
+let songIndex = 1;
 
 // Initialize load song details
 loadSong(songTitles[songIndex]);
@@ -61,6 +61,20 @@ function nextSong() {
   playSong();
 }
 
+function updateProgress(e) {
+  const { duration, currentTime } = e.srcElement;
+  const progressPercent = currentTime / duration * 100;
+  progress.style.width = `${progressPercent}%`;
+}
+
+function setProgress(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const {duration} = audio;
+
+  audio.currentTime = clickX / width * duration;
+}
+
 playBtn.addEventListener('click', () => {
   const isPlaying = musicContainer.classList.contains('play');
 
@@ -73,3 +87,5 @@ playBtn.addEventListener('click', () => {
 
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
+audio.addEventListener('timeupdate', updateProgress)
+progressContainer.addEventListener('click', setProgress)

@@ -12,9 +12,9 @@ const cover = document.getElementById('cover');
 const songTitles = ['hey', 'summer', 'ukulele'];
 
 // Song tracker
-let songIndex = 1;
+let songIndex = 2;
 
-// Initialize load song detaiks
+// Initialize load song details
 loadSong(songTitles[songIndex]);
 
 function loadSong(songTitle) {
@@ -37,6 +37,30 @@ function pauseSong() {
   audio.pause();
 }
 
+function prevSong() {
+  songIndex -= 1;
+
+  if (songIndex < 0) {
+    songIndex = songTitles.length - 1;
+  }
+
+  loadSong(songTitles[songIndex]);
+
+  playSong();
+}
+
+function nextSong() {
+  songIndex += 1;
+
+  if (songIndex > songTitles.length -1) {
+    songIndex = 0;
+  }
+
+  loadSong(songTitles[songIndex]);
+
+  playSong();
+}
+
 playBtn.addEventListener('click', () => {
   const isPlaying = musicContainer.classList.contains('play');
 
@@ -46,3 +70,6 @@ playBtn.addEventListener('click', () => {
     playSong();
   }
 });
+
+prevBtn.addEventListener('click', prevSong);
+nextBtn.addEventListener('click', nextSong);
